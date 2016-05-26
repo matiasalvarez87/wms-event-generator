@@ -1,0 +1,16 @@
+{
+  "name": "wms-event-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-random": "^1.0.1",
+    "random-js": "^1.0.8",
+    "request": "^2.72.0"
+  }
+}
