@@ -4,15 +4,20 @@ var http = require("http");
 
 var r = new Random(Random.engines.mt19937().seedWithArray([0x12345678, 0x90abcdef]));
 
+var settings = {
+  order: { min:   300000, max: 1000000 },
+  events: { min:   10000, max: 3000000 }
+};
+
 // Init auto generator program
 function generateEvents() {
   step1();
-  setTimeout(generateEvents, r.integer(500, 5000));
+  setTimeout(generateEvents, r.integer(settings.order.min, settings.order.max));
 }
 generateEvents();
 
 function distribution() {
-  return r.integer(1000, 2000);
+  return r.integer(settings.events.min, settings.events.max);
 }
 
 
@@ -36,6 +41,8 @@ function step3(e) {
   e.setStep3Data();
   if (r.bool(.74))
     setTimeout(step4, distribution(), e);
+  else if (r.bool(.4))
+    setTimeout(setPickingExceptionData, distribution(), e);
 }
 
 // Step 4
@@ -57,6 +64,8 @@ function step6(e) {
   e.setStep6Data();
   if (r.bool(.6))
     setTimeout(step7, distribution(), e);
+  else if (r.bool(.2))
+    setTimeout(setVKExceptionData, distribution(), e);
 }
 
 // Step 7

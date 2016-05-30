@@ -1,3 +1,5 @@
+'use strict';
+
 var request = require('request');
 var Random = require("random-js");
 var r = new Random(Random.engines.mt19937().seedWithArray([0x12345678, 0x90abcdef]));
@@ -34,7 +36,7 @@ class OplogEvent {
   }
 
   setStep1Data() {
-    this.eventFamily = "Web Order";
+    this.eventFamily = "Weborder";
     this.event = "Confirmed";
     this.eventType = "Order";
     this.entityId = "" + r.integer(10000, 99999);
@@ -45,7 +47,7 @@ class OplogEvent {
   }
 
   setStep2Data() {
-    // this.eventFamily = "Web Order";
+    // this.eventFamily = "Weborder";
     this.event = "Printed";
     // this.eventType = "Order";
     // this.entityId = r.integer(10000, 99999);
@@ -64,6 +66,19 @@ class OplogEvent {
     this.workstationId = r.pick(workstations);
     this.staffId = r.pick(staff.pickers);
     this.serviceId = "Picking Station";
+    send(this);
+  }
+
+  setPickingExceptionData() {
+    // this.eventFamily = "Picking";
+    this.event = "Exception";
+    // this.eventType = "Item";
+    // this.parentId = this.entityId;
+    // this.entityId = r.integer(10000, 99999) + " " + r.integer(1000, 9999);
+    // this.workstationId = r.pick(workstations);
+    // this.staffId = r.pick(staff.pickers);
+    // this.serviceId = "Picking Station";
+    this.exceptionType = "Item not found in warehouse.";
     send(this);
   }
 
@@ -100,6 +115,19 @@ class OplogEvent {
     this.workstationId = r.pick(workstations);
     this.staffId = r.pick(staff.vkers);
     this.serviceId = "VK Station";
+    send(this);
+  }
+
+  setVKExceptionData() {
+    this.eventFamily = "Vking";
+    this.event = "Exception";
+    // this.eventType = "Item";
+    // this.parentId = this.entityId;
+    // this.entityId = r.integer(10000, 99999) + " " + r.integer(1000, 9999);
+    this.workstationId = r.pick(workstations);
+    this.staffId = r.pick(staff.vkers);
+    this.serviceId = "VK Station";
+    this.exceptionType = "Item yellowed.";
     send(this);
   }
 
