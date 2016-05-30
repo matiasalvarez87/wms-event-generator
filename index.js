@@ -5,8 +5,8 @@ var http = require("http");
 var r = new Random(Random.engines.mt19937().seedWithArray([0x12345678, 0x90abcdef]));
 
 var settings = {
-  order: { min:   300000, max: 1000000 },
-  events: { min:   10000, max: 3000000 }
+  order: { min:   100000, max: 500000 },
+  events: { min:   10000, max: 300000 }
 };
 
 // Init auto generator program
