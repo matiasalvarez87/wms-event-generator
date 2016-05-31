@@ -2,9 +2,19 @@
 
 var request = require('request');
 var Random = require("random-js");
-var r = new Random(Random.engines.mt19937().seedWithArray([0x12345678, 0x90abcdef]));
 
-var workstations = ["WS-01", "WS-02", "WS-03", "WS-04", "WS-05", "WS-06", "WS-07", "WS-08", "WS-09", "WS-10"];
+const config = require('./config.json');
+
+var r = new Random(
+  Random.engines
+    .mt19937()
+    .seedWithArray([0x12345678, 0x90abcdef]));
+
+var workstations = [
+  "WS-01", "WS-02", "WS-03",
+  "WS-04", "WS-05", "WS-06",
+  "WS-07", "WS-08", "WS-09", "WS-10"];
+
 var staff = {
   general: ["Swoop", "John", "Jake", "Sean", "Carlos"],
   pickers: ["Tiffany", "Brittany", "Luis", "Mike"],
@@ -17,17 +27,15 @@ function send(e) {
   // curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -H "Postman-Token: 5cb85223-88f6-c878-1b10-65b5081ee3bf" -d '{ "eventFamily" : "Web Order", "event" : "Confirmed", "eventType" : "Order", "entityId": "23013", "workstationId": "WS-01", "staffId": "John", "serviceId": "Magento" }' "http://127.0.0.1:9999"
 
   request({
-    // uri: 'http://127.0.0.1:9999',
-    // uri: 'http://ec2-54-86-85-223.compute-1.amazonaws.com:8080',
-    uri: 'http://ec2-54-173-70-132.compute-1.amazonaws.com:8080',
+    uri: config.logstash.url,
     json: e
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body) // Show the HTML for the Google homepage.
+  }, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      console.log(body);
     } else {
       console.error(error);
     }
-  })
+  });
 }
 
 class OplogEvent {
@@ -39,7 +47,7 @@ class OplogEvent {
     this.eventFamily = "Weborder";
     this.event = "Confirmed";
     this.eventType = "Order";
-    this.entityId = "" + r.integer(10000, 99999);
+    this.entityId = String(r.integer(10000, 99999));
     this.workstationId = r.pick(workstations);
     this.staffId = r.pick(staff.general);
     this.serviceId = "Magento";
