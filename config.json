@@ -1,0 +1,5 @@
+{
+  "logstash": {
+    "url": "http://ec2-54-173-70-132.compute-1.amazonaws.com:8080"
+  }
+}

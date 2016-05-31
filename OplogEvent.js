@@ -2,6 +2,9 @@
 
 var request = require('request');
 var Random = require("random-js");
+
+const config = require('./config.json');
+
 var r = new Random(
   Random.engines
     .mt19937()
@@ -24,9 +27,7 @@ function send(e) {
   // curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -H "Postman-Token: 5cb85223-88f6-c878-1b10-65b5081ee3bf" -d '{ "eventFamily" : "Web Order", "event" : "Confirmed", "eventType" : "Order", "entityId": "23013", "workstationId": "WS-01", "staffId": "John", "serviceId": "Magento" }' "http://127.0.0.1:9999"
 
   request({
-    // uri: 'http://127.0.0.1:9999',
-    // uri: 'http://ec2-54-86-85-223.compute-1.amazonaws.com:8080',
-    uri: 'http://ec2-54-173-70-132.compute-1.amazonaws.com:8080',
+    uri: config.logstash.url,
     json: e
   }, (error, response, body) => {
     if (!error && response.statusCode === 200) {
