@@ -45,7 +45,9 @@ function step3(e) {
   if (r.bool(0.74)) {
     setTimeout(step4, distribution(), e);
   } else if (r.bool(0.4)) {
-    setTimeout(setPickingExceptionData, distribution(), e);
+    setTimeout(function() {
+      e.setPickingExceptionData();
+    }, distribution());
   }
 }
 
@@ -71,7 +73,9 @@ function step6(e) {
   if (r.bool(0.6)) {
     setTimeout(step7, distribution(), e);
   } else if (r.bool(0.2)) {
-    setTimeout(setVKExceptionData, distribution(), e);
+    setTimeout(function(){
+      e.setVKExceptionData();
+    }, distribution());
   }
 }
 
@@ -94,12 +98,4 @@ function step8(e) {
 // Step 9
 function step9(e) {
   e.setStep9Data();
-}
-
-function setVKExceptionData(/* e */) {
-  // Not implemented
-}
-
-function setPickingExceptionData(/* e */) {
-  // Not implemented
 }
